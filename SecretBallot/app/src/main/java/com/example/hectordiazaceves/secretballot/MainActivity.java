@@ -2,8 +2,12 @@ package com.example.hectordiazaceves.secretballot;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
+import com.amazonaws.mobile.client.AWSMobileClient;
+import com.amazonaws.mobile.client.AWSStartupHandler;
+import com.amazonaws.mobile.client.AWSStartupResult;
 
 import java.util.Arrays;
 
@@ -18,6 +22,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        /*
+
+        When AWSMobileClient is initialized, it constructs the AWSCredentialsProvider
+         and AWSConfiguration objects which, in turn, are used when creating other SDK clients.
+          The client then makes a Sigv4 signed network call to Amazon Cognito Federated Identities to retrieve AWS
+           credentials that provide the user access to your backend resources. When the network interaction succeeds,
+            the onComplete method of the AWSStartUpHandler is called.
+
+        from: https://docs.aws.amazon.com/aws-mobile/latest/developerguide/getting-started.html
+         */
+
+        AWSMobileClient.getInstance().initialize(this, new AWSStartupHandler() {
+            @Override
+            public void onComplete(AWSStartupResult awsStartupResult) {
+                Log.d("YourMainActivity", "AWSMobileClient is instantiated and you are connected to AWS!");
+            }
+        }).execute();
 
         // Example of a call to a native metho
 
