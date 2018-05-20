@@ -8,14 +8,57 @@ import android.widget.TextView;
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+
 
 import java.util.Arrays;
+import java.util.Date;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
     // Used to load the 'native-lib' library on application startup.
     static {
         System.loadLibrary("native-lib");
+    }
+
+    // Declare a DynamoDBMapper object
+    DynamoDBMapper dynamoDBMapper;
+
+    //Create a question
+
+    public void createQuestion(){
+
+        final QuestionsDO questionItem = new QuestionsDO();
+
+        String uniqueId = UUID.randomUUID().toString();
+
+        questionItem.setQuestionId(uniqueId);
+        questionItem.setQuestion("Who is the president?");
+        questionItem.setOption1("Obama");
+        questionItem.setOption2("Trump");
+        questionItem.setOption3("Rihanna");
+
+        Date date = new Date();
+
+        double ts = (double)date.getTime();
+
+        questionItem.setTimestamp(ts);
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+
+                dynamoDBMapper.save(questionItem);
+
+            }
+        };
+
+        Thread myThread = new Thread(runnable);
+
+        myThread.start();
+
     }
 
     @Override
@@ -41,6 +84,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }).execute();
 
+        // Instantiate a AmazonDynamoDBMapperClient
+        AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(AWSMobileClient.getInstance().getCredentialsProvider());
+        this.dynamoDBMapper = DynamoDBMapper.builder()
+                .dynamoDBClient(dynamoDBClient)
+                .awsConfiguration(AWSMobileClient.getInstance().getConfiguration())
+                .build();
+
         // Example of a call to a native metho
 
         TextView qInfo = (TextView) findViewById(R.id.tvQuestion);
@@ -49,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
         Button btnOption2 = (Button) findViewById(R.id.btnOption2);
         Button btnOption3 = (Button) findViewById(R.id.btnOption3);
 
+
+        createQuestion();
 
 
 
