@@ -61,6 +61,28 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void readQuestion(){
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+
+                double d = 1526955963998d;
+
+                QuestionsDO questionsDO = dynamoDBMapper.load(QuestionsDO.class, "8c63b703-b10c-478c-82a5-d89d05123ac9", d);
+
+                Log.d("Question: ", questionsDO.getQuestion());
+
+            }
+        };
+
+        Thread thread = new Thread(runnable);
+
+        thread.start();
+
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,8 +122,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnOption3 = (Button) findViewById(R.id.btnOption3);
 
 
-        createQuestion();
-
+        readQuestion();
 
 
         Question q = new Question();
