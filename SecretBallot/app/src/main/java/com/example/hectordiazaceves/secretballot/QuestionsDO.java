@@ -1,6 +1,4 @@
-//package com.amazonaws.models.nosql;
 package com.example.hectordiazaceves.secretballot;
-
 
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribute;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
@@ -16,31 +14,21 @@ import java.util.Set;
 @DynamoDBTable(tableName = "secretballot-mobilehub-431411040-Questions")
 
 public class QuestionsDO {
-
-    private String _questionId;
-    private Double _timestamp;
+    private String _id;
     private String _option1;
     private String _option2;
     private String _option3;
     private String _question;
+    private Double _timestamp;
 
-    @DynamoDBHashKey(attributeName = "questionId")
-    @DynamoDBAttribute(attributeName = "questionId")
-    public String getQuestionId() {
-        return _questionId;
+    @DynamoDBHashKey(attributeName = "Id")
+    @DynamoDBAttribute(attributeName = "Id")
+    public String getId() {
+        return _id;
     }
 
-    public void setQuestionId(final String _questionId) {
-        this._questionId = _questionId;
-    }
-    @DynamoDBRangeKey(attributeName = "timestamp")
-    @DynamoDBAttribute(attributeName = "timestamp")
-    public Double getTimestamp() {
-        return _timestamp;
-    }
-
-    public void setTimestamp(final Double _timestamp) {
-        this._timestamp = _timestamp;
+    public void setId(final String _id) {
+        this._id = _id;
     }
     @DynamoDBAttribute(attributeName = "option1")
     public String getOption1() {
@@ -73,6 +61,14 @@ public class QuestionsDO {
 
     public void setQuestion(final String _question) {
         this._question = _question;
+    }
+    @DynamoDBAttribute(attributeName = "timestamp")
+    public Double getTimestamp() {
+        return _timestamp;
+    }
+
+    public void setTimestamp(final Double _timestamp) {
+        this._timestamp = _timestamp;
     }
 
 }

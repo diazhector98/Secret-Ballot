@@ -1,5 +1,3 @@
-//package com.amazonaws.models.nosql;
-
 package com.example.hectordiazaceves.secretballot;
 
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribute;
@@ -13,22 +11,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-@DynamoDBTable(tableName = "secretballot-mobilehub-431411040-QuestionResults")
+@DynamoDBTable(tableName = "secretballot-mobilehub-431411040-Yesterday")
 
-public class QuestionResultsDO {
-    private String _questionId;
+public class YesterdayDO {
+    private String _id;
     private Double _votes1;
     private Double _votes2;
     private Double _votes3;
 
-    @DynamoDBHashKey(attributeName = "questionId")
-    @DynamoDBAttribute(attributeName = "questionId")
-    public String getQuestionId() {
-        return _questionId;
+    @DynamoDBHashKey(attributeName = "id")
+    @DynamoDBAttribute(attributeName = "id")
+    public String getId() {
+        return _id;
     }
 
-    public void setQuestionId(final String _questionId) {
-        this._questionId = _questionId;
+    public void setId(final String _id) {
+        this._id = _id;
     }
     @DynamoDBAttribute(attributeName = "votes1")
     public Double getVotes1() {

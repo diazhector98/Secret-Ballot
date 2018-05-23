@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         String uniqueId = UUID.randomUUID().toString();
 
-        questionItem.setQuestionId(uniqueId);
+        questionItem.setId(uniqueId);
         questionItem.setQuestion("Who is the president?");
         questionItem.setOption1("Obama");
         questionItem.setOption2("Trump");
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
                 double d = 1526955963998d;
 
-                QuestionsDO questionsDO = dynamoDBMapper.load(QuestionsDO.class, "8c63b703-b10c-478c-82a5-d89d05123ac9", d);
+                QuestionsDO questionsDO = dynamoDBMapper.load(QuestionsDO.class, "8c63b703-b10c-478c-82a5-d89d05123ac9");
 
                 Log.d("Question: ", questionsDO.getQuestion());
 
